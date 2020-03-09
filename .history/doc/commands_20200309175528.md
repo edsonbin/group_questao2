@@ -1,0 +1,44 @@
+# Comandos
+
+php artisan make:controller CondominioController --resource --model=Condominio
+php artisan make:controller UnidadeController --resource --model=Unidade
+php artisan make:controller MoradorController --resource --model=Morador
+
+Route::resource('condominios', 'CondominioController');
+Route::resource('unidades', 'UnidadeController');
+Route::resource('Morador', 'MoradorController');
+
+php artisan make:model Condominio -m
+php artisan make:model Unidade -m
+php artisan make:model Morador -m
+
+php artisan make:migration create_condominios_table --create=condominios
+php artisan make:migration create_unidades_table --create=unidades
+php artisan make:migration create_moradores_table --create=moradores
+
+## Condominio
+
+protected $fillable = array('nome', 'endereco');
+
+public function unidades()
+{
+    return $this->hasMany('App\Unidade');
+}
+
+## Unidade
+
+protected $fillable = array('numero');
+
+public function condominio()
+{
+    return $this->belongsTo('App\Condominio');
+}
+
+public function morador()
+{
+    return $this->hasOne('App\Morador');
+}
+
+## Morador
+
+protected $fillable = array('nome', 'sobrenome');
